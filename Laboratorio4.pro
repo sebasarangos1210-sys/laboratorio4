@@ -5,7 +5,11 @@ CONFIG -= qt
 
 SOURCES += \
         main.cpp \
-        mainmenu.cpp
+        mainmenu.cpp \
+        menu.cpp \
+        network.cpp
 
 HEADERS += \
-    mainmenu.h
+    mainmenu.h \
+    menu.h \
+    network.h
