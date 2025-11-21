@@ -1,0 +1,55 @@
+# Archivos de compilación
+*.o
+*.obj
+*.exe
+*.out
+*.app
+*.dll
+*.so
+*.dylib
+
+# Directorios de build
+build*/
+Debug/
+Release/
+x64/
+x86/
+*.autosave
+
+# Archivos específicos de Qt
+*.pro.user
+*.pro.user.*
+moc_*
+qrc_*
+ui_*
+
+# Archivos de CMake
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+Makefile
+
+# Archivos del sistema
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+
+# Archivos de IDE
+.vscode/
+.idea/
+*.sln
+*.vcxproj*
+*.vcproj*
+
+# Archivos de respaldo
+*~
+*.bak
+*.backup
+
+# Logs y temporales
+*.log
+*.tmp
+temp/
+tmp/
+EOF
