@@ -7,9 +7,11 @@ SOURCES += \
         main.cpp \
         mainmenu.cpp \
         menu.cpp \
-        network.cpp
+        network.cpp \
+        router.cpp
 
 HEADERS += \
     mainmenu.h \
     menu.h \
-    network.h
+    network.h \
+    router.h
