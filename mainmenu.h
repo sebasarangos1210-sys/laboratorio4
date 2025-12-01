@@ -2,11 +2,11 @@
 #define MAINMENU_H
 
 #include "network.h"
+#include <string>
 
-int readInt(const string &prompt);
+int readInt(const std::string &prompt);
 
 int flowTopology(Network &net);
 int flowQuery(Network &net);
-int mainMenu(Network &net);
 
 #endif // MAINMENU_H

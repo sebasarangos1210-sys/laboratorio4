@@ -1,6 +1,7 @@
 #include "mainmenu.h"
-#include "menu.h"          // showMainMenu, showTopologyMenu, showQueryMenu
+#include "menu.h"
 #include "network.h"
+#include "router.h"
 #include <iostream>
 #include <limits>
 
@@ -16,41 +17,55 @@ int flowTopology(Network &net)
     {
         switch (op)
         {
-        case 1: {  // Cargar desde archivo
-            cout << "Archivo de topologia: ";
-            string fname; cin >> fname;
+        case 1: {
+            cout << "Archivo de topología: ";
+            string fname;
+            cin >> fname;
             if (!net.loadFromFile(fname))
                 cout << "Error cargando: " << fname << "\n";
+            else
+                cout << "Topología cargada exitosamente.\n";
             break;
         }
-        case 2: {  // Agregar router
+        case 2: {
             cout << "ID nuevo router: ";
-            string id; cin >> id;
+            string id;
+            cin >> id;
             if (!net.addRouter(id))
                 cout << "El router ya existe.\n";
+            else
+                cout << "Router agregado: " << id << "\n";
             break;
         }
-        case 3: {  // Eliminar router
+        case 3: {
             cout << "ID router a eliminar: ";
-            string id; cin >> id;
+            string id;
+            cin >> id;
             if (!net.removeRouter(id))
                 cout << "No existe ese router.\n";
+            else
+                cout << "Router eliminado: " << id << "\n";
             break;
         }
-        case 4: {  // Agregar enlace
+        case 4: {
             cout << "Router origen, destino y costo: ";
-            string a, b; int cost;
+            string a, b;
+            int cost;
             cin >> a >> b >> cost;
             if (!net.addLink(a, b, cost))
                 cout << "Error al agregar enlace.\n";
+            else
+                cout << "Enlace agregado: " << a << " <-> " << b << " (costo: " << cost << ")\n";
             break;
         }
-        case 5: {  // Eliminar enlace
+        case 5: {
             cout << "Router origen y destino: ";
             string a, b;
             cin >> a >> b;
             if (!net.removeLink(a, b))
                 cout << "Error al eliminar enlace.\n";
+            else
+                cout << "Enlace eliminado: " << a << " <-> " << b << "\n";
             break;
         }
         }
@@ -66,29 +81,41 @@ int flowQuery(Network &net)
     {
         switch (op)
         {
-        case 1: {  // Mostrar tabla de un router
+        case 1: {
             cout << "ID del router: ";
-            string id; cin >> id;
+            string id;
+            cin >> id;
             const Router* r = net.getRouter(id);
-            if (r) r->printRoutingTable();
-            else  cout << "Router no encontrado.\n";
+            if (r) {
+                r->printRoutingTable();
+            } else {
+                cout << "Router no encontrado.\n";
+            }
             break;
         }
-        case 2: {  // Consultar costo mínimo
+        case 2: {
             cout << "Origen y Destino: ";
-            string s, d; cin >> s >> d;
+            string s, d;
+            cin >> s >> d;
             int c = net.queryMinCost(s, d);
-            if (c >= 0) cout << "Costo min " << s << "→" << d << " = " << c << "\n";
-            else        cout << "Ruta no disponible.\n";
+            if (c >= 0) {
+                cout << "Costo mínimo " << s << " -> " << d << " = " << c << "\n";
+            } else {
+                cout << "Ruta no disponible.\n";
+            }
             break;
         }
-        case 3: {  // Mostrar camino mínimo
+        case 3: {
             cout << "Origen y Destino: ";
-            string s, d; cin >> s >> d;
+            string s, d;
+            cin >> s >> d;
             auto path = net.queryPath(s, d);
             if (!path.empty()) {
                 cout << "Ruta: ";
-                for (auto& hop : path) cout << hop << " ";
+                for (size_t i = 0; i < path.size(); i++) {
+                    cout << path[i];
+                    if (i < path.size() - 1) cout << " -> ";
+                }
                 cout << "\n";
             } else {
                 cout << "Ruta no disponible.\n";
@@ -106,10 +133,8 @@ int readInt(const string &prompt) {
         cout << prompt;
         cin >> x;
         if (!cin.fail()) {
-            // lectura correcta
             return x;
         }
-        // lectura fallida: limpia error y descarta la entrada inválida
         cin.clear();
         cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
         cout << "  Entrada inválida. Por favor, ingresa un número entero.\n";
